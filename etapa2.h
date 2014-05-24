@@ -1,34 +1,26 @@
-#include "etapa2.h"
 #include "cadeias.h"
+//#include "hash.c"
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct tabela_sopa
 {
 	int nlinhas;
 	int ncolunas;
 	char linha[ncolunas][nlinhas];
-}tabela_sopa;
+}t_sopa;
+
+void jogar(char *ficheiro);
+
+void jogar_serpente(t_sopa sopa);
+
+int jogada_possivel_s(int x_ant, int y_ant, int x, int y);
+
+void jogar_cavalo(t_sopa sopa);
+
+int jogada_possivel_c(int x_ant, int y_ant, int x , int y);
+
+int coord_valida(int x, int y, t_sopa sopa);
 
 
-typedef struct chain 
-{
 
-
-}
-
-typedef struct tabela
-{
-	int tamanho;
-	int preenchidos;
-	chain array;
-
-}
-
-
-typedef struct lista 
-{
-
-	char *palavra;
-	struct lista *seguinte;
-
-} lista;
