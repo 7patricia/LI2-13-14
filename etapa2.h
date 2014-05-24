@@ -1,7 +1,5 @@
-#include "cadeias.h"
-//#include "hash.c"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct tabela_sopa
 {
@@ -12,15 +10,15 @@ typedef struct tabela_sopa
 
 void jogar(char *ficheiro);
 
-void jogar_serpente(t_sopa sopa);
+void jogar_serpente(tsopa sopa);
 
-int jogada_possivel_s(int x_ant, int y_ant, int x, int y);
+int jogada_possivel_s(int x_ant, int y_ant, int x, int y, tsopa sopa);
 
-void jogar_cavalo(t_sopa sopa);
+void jogar_cavalo(tsopa sopa);
 
-int jogada_possivel_c(int x_ant, int y_ant, int x , int y);
+int jogada_possivel_c(int x_ant, int y_ant, int x , int y, tsopa sopa);
 
-int coord_valida(int x, int y, t_sopa sopa);
+int coord_valida(int x, int y, tsopa sopa);
 
 
 

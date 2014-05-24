@@ -1,5 +1,7 @@
 #include "cadeias.h"
-#include "etapa2.h"
+// #include "etapa2.h"
+#include <stdio.h>
+#include <stdlib.h>
 // #include "hash.c"
 
 void main()
