@@ -4,15 +4,26 @@
 
 #include "hash_table.h"
 
-HashTable Hash_Create(int maxCount, int (*hashFunction)(void *, int), void *(*getKey)(void *), int (*compareKeys)(void *, void *), int duplicate) {
+int Hash_hash(void*key,int size){
+    char *palavra = (char*)key;
+    int x,sum;
+    for(x=0; palavra[x] != '\0'; x++) {
+        sum = sum*2 + palavra[x];
+    }
+     
+    return sum % size;
+}
+
+int Hash_compare_keys(char *key1,char *key2) {
+
+    return strcmp(key1, key2) == 0;
+}
+
+HashTable Hash_Create(int maxCount) {
     HashTable hs = (HashTable) malloc(sizeof (struct hash_table));
 
     hs->useCount = 0;
     hs->totalCount = maxCount;
-    hs->hashFunction = hashFunction;
-    hs->getKey = getKey;
-    hs->compareKeys = compareKeys;
-    hs->duplicate = duplicate;
     hs->table = (HashElem *) malloc(sizeof (HashElem) * maxCount);
 
     int x;
@@ -46,7 +57,6 @@ int Hash_Expand(HashTable hashT) {
         aux = oldTable[x];
         while (aux != NULL) {
             Hash_Insert(hashT, aux->data);
-            fflush(stdout);
             aux2 = aux;
             aux = aux->next;
             free(aux2);
@@ -59,8 +69,8 @@ int Hash_Expand(HashTable hashT) {
     return 0;
 }
 
-int Hash_Insert(HashTable hashT, void *data) {
-    int hash = hashT->hashFunction(hashT->getKey(data), hashT->totalCount);
+int Hash_Insert(HashTable hashT, char *data) {
+    int hash = Hash_hash(data, hashT->totalCount);
     
     hashT->useCount += Elem_Insert(hashT, &(hashT->table[hash]), data);
     
@@ -71,30 +81,11 @@ int Hash_Insert(HashTable hashT, void *data) {
     return 0;
 }
 
-void *Hash_Remove(HashTable hashT, void *key) {
-    HashElem *aux = &(hashT->table[hashT->hashFunction(key, hashT->totalCount)]);
-    HashElem toFree;
-    void *toReturn = NULL;
-
-    while (*aux != NULL && !hashT->compareKeys(key, hashT->getKey((*aux)->data))) {
-        aux = &((*aux)->next);
-    }
-
-    if (*aux != NULL) {
-        toFree = *aux;
-        toReturn = toFree->data;
-        *aux = (*aux)->next;
-        free(toFree);
-    }
-
-    return toReturn;
-}
-
-void *Hash_Search(HashTable hashT, void *key) {
-    int hash = hashT->hashFunction(key, hashT->totalCount);
+char *Hash_Search(HashTable hashT, char *key) {
+    int hash = Hash_hash(key, hashT->totalCount);
     HashElem aux = hashT->table[hash];
     while (aux != NULL) {
-        if (hashT->compareKeys(hashT->getKey(aux->data), key))
+        if (Hash_compare_keys(aux->data, key))
             return aux->data;
         aux = aux->next;
     }
@@ -102,46 +93,13 @@ void *Hash_Search(HashTable hashT, void *key) {
     return NULL;
 }
 
-int Hash_ClearAll(HashTable hashT) {
-    HashElem aux, aux2;
-    int x;
-
-    for (x = 0; x < hashT->totalCount; x++) {
-        aux = hashT->table[x];
-        while (aux != NULL) {
-            aux2 = aux;
-            aux = aux->next;
-            free(aux2);
-        }
-    }
-    free(hashT->table);
-    free(hashT);
-
-    return 0;
-}
-
-int Hash_ApplyToAll(HashTable hashT, int (*function)(void *, void *, void *), void *params) {
-    HashElem aux;
-
-    int x;
-    for (x = 0; x < hashT->totalCount; x++) {
-        aux = hashT->table[x];
-        while (aux != NULL) {
-            function(aux->data, hashT->getKey(aux->data), params);
-            aux = aux->next;
-        }
-    }
-
-    return 0;
-}
-
-int Elem_Insert(HashTable hashT, HashElem *elem, void *data) {
-    while ((*elem != NULL) && !hashT->compareKeys(hashT->getKey((*elem)->data), hashT->getKey(data))) {
+int Elem_Insert(HashTable hashT, HashElem *elem, char *data) {
+    while ((*elem != NULL) && !Hash_compare_keys((*elem)->data, data)) {
         elem = &((*elem)->next);
     }
 
     int returnVal = 0;
-    if (*elem == NULL || hashT->duplicate) {
+    if (*elem == NULL) {
         *elem = (HashElem) malloc(sizeof (struct hash_elem));
         (*elem)->next = NULL;
         returnVal = 1;

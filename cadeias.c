@@ -12,7 +12,7 @@
   int cad_procurar_car ( char c , char s []){
     	int i=0;
   	 if(cad_ocorrencias(c,s) == 0) return -1;
-  	 while((s[i]!="\0") && (s[i]!=c))
+  	 while((s[i]!='\0') && (s[i]!=c))
   	    		i++;
 	 return i;
     }

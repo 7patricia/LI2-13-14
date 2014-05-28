@@ -6,8 +6,7 @@
  * Elemento de uma tabela de hash
  */
 typedef struct hash_elem {
-	//long long int key;                /**< Chave do elemento guardado */
-	void *data;             /**< Apontador para os dados guardados */
+	char *data;             /**< Apontador para os dados guardados */
 	struct hash_elem *next; /**< Apontador para o proximo elemento (hash table usando o metodo de chaining) */
 } *HashElem;
 
@@ -17,21 +16,17 @@ typedef struct hash_elem {
 typedef struct hash_table {
 	int useCount;                       /**< Total de elementos guardados na tabela */
 	int totalCount;                     /**< Numero maximo de elementos suportados */
-	int (*hashFunction)(void *, int);   /**< Apontador para a funcao de hash */
-	void *(*getKey)(void *);            /**< Funcao que extrai a chave */
-	int (*compareKeys)(void *, void *); /**< Funcao que compara duas chaves */
-        int duplicate;                      /**< Indica se a tabela aceita valores duplicados */
 	HashElem *table;                    /**< Apontador para a tabela */
 } HashTableStruct, *HashTable;
 
 /**
  * @fn Hash_Create
- * @brief Data uma tabela de hash, inicia-a dando um tamanho inicial ao array
+ * @brief Dada uma tabela de hash, inicia-a dando um tamanho inicial ao array
  * 
  * @param maxCount indica o tamanho inicial do array
  * @return Apontador para a nova tabela de hash
  */
-HashTable Hash_Create(int maxCount, int (*hashFunction)(void *, int), void *(*getKey)(void *), int (*compareKeys)(void *, void *), int duplicate);
+HashTable Hash_Create(int maxCount);
 
 /** 
  * @fn Hash_IsFull
@@ -59,17 +54,7 @@ int Hash_Expand(HashTable hashT);
  * @param data Dados a inserir
  * @return 0 em caso de sucesso, diferente de 0 em caso de erro
  */
-int Hash_Insert(HashTable hashT, void *data);
-
-/** 
- * @fn Hash_Remove
- * @brief Remove um bloco da tabela, com base na chave
- * 
- * @param hashT Tabela a utilizar
- * @param key Chave para identificar os dados a remover
- * @return Apontador para os dados removidos, caso se decida fazer free
- */
-void *Hash_Remove(HashTable hashT, void *key);
+int Hash_Insert(HashTable hashT, char *data);
 
 /** 
  * @fn Hash_Search
@@ -79,26 +64,7 @@ void *Hash_Remove(HashTable hashT, void *key);
  * @param key Chave a utilizar
  * @return Apontador para os dados encontrados, ou NULL se nao existirem
  */
-void *Hash_Search(HashTable hashT, void *key);
-
-/** 
- * @fn Hash_ClearAll
- * @brief Elimina a tabela e tudo por ela apontado
- * 
- * @param hashT Tabela a eliminar
- * @return 0 em caso de sucesso
- */
-int Hash_ClearAll(HashTable hashT);
-
-/** 
- * @fn Hash_ApplyToAll
- * @brief Aplica uma funcao a todos os elementos da tabela de hash
- * 
- * @param hashT Tabela a usar
- * @param function Funcao a aplicar
- * @return 0 em caso de sucesso
- */
-int Hash_ApplyToAll(HashTable hashT, int (*function)(void *, void *, void *), void *params);
+char *Hash_Search(HashTable hashT, char *key);
 
 /** 
  * @fn Elem_Insert
@@ -110,6 +76,6 @@ int Hash_ApplyToAll(HashTable hashT, int (*function)(void *, void *, void *), vo
  * @param key Chave indentificar os elementos
  * @return 0 em caso de sucesso
  */
-int Elem_Insert(HashTable hashT, HashElem *elem, void *data);
+int Elem_Insert(HashTable hashT, HashElem *elem, char *data);
 
 #endif
