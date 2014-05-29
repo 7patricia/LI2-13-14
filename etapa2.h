@@ -11,7 +11,7 @@ typedef struct tabela_sopa
 	char **linha;
 }*t_sopa;
 
-typedef HashTable DICIONARIO;
+typedef char** DICIONARIO;
 
 /**
  * @fn criar_dicionario

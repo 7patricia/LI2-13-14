@@ -3,22 +3,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "hash_table.h"
+/* #include "hash_table.h" */
 
 
 DICIONARIO criar_dicionario (char *ficheiro)
 {
-	char palavra[50];
-	char *palavra2;
+	char palavra[64];
+	/* char *palavra2; */
 
-	DICIONARIO dic = Hash_Create(24);
+	/* DICIONARIO dic = Hash_Create(24); */
+	/* FILE* file = fopen(ficheiro,"r"); */
+	/* while(fgets(palavra, 50, file)!=NULL) { */
+	/* 		palavra[strlen(palavra)-1] = '\0'; */
+	/* 		palavra2 = (char *)malloc(sizeof(char)*50); */
+	/* 		strcpy(palavra2,palavra); */
+	/* 		Hash_Insert(dic,palavra2); */
+	/* 	} */
+	DICIONARIO dic = (DICIONARIO)malloc(sizeof(char*)*100000);
+        int i;
+        for(i = 0; i < 100000; ++i) {
+          dic[i] = (char *) malloc(sizeof(char)*64);
+          dic[i][0] = '\0';
+        }
+
+        i = 0;
 	FILE* file = fopen(ficheiro,"r");
-	while(fgets(palavra, 50, file)!=NULL) {
+	while(fgets(palavra, 64, file)!=NULL) {
 			palavra[strlen(palavra)-1] = '\0';
-			palavra2 = (char *)malloc(sizeof(char)*50);
-			strcpy(palavra2,palavra);
-			Hash_Insert(dic,palavra2);
+			strcpy(dic[i], palavra);
+                        ++i;
 		}
+
         fclose(file);
 	return dic;
 }
@@ -26,9 +41,15 @@ DICIONARIO criar_dicionario (char *ficheiro)
 
 int palavra_existe(DICIONARIO dic, char * palavra)
 {
-	return Hash_Search(dic,palavra)==NULL;
+  int i;
+  for(i = 0; i < 100000; ++i) {
+    if (strcmp(dic[i],palavra)==0) {
+      return 1;
+    }
+  }
+  return 0;
+	/* return Hash_Search(dic,palavra)!=NULL; */
 }
-
 
 
 void jogar(char *ficheiro, DICIONARIO dic)
