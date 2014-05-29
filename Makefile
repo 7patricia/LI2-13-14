@@ -1,11 +1,12 @@
+# gcc *.c -o etapa2
+
 CC = gcc
-CFLAGS = -ansi -Wall -Wextra -pedantic -O2
+CFLAGS = -ansi -Wall -Wextra -pedantic -g
 
-all: cadeias.o tarefa2.o
-		$(CC) $(CFLAGS) -o all  cadeias.c tarefa2.c
+all: etapa2
 
-testcadeias: main.o cadeias.o
-		$(CC) $(CFLAGS) -o maincadeias main.c cadeias.c
+etapa2: etapa2.o cadeias.o hash_table.o main.o
+	$(CC) $(CFLAGS) -o etapa2.o cadeias.o hash_table.o main.o
 
 clean:
-		rm -f *.o
+	rm -f *.o
