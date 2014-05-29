@@ -34,7 +34,7 @@ void jogar(char *ficheiro, DICIONARIO dic)
 {
 	char x[3],y[3];
 	int i, j;
-	char *modo;
+	char modo[20];
 	t_sopa sopa = (t_sopa)malloc(sizeof(struct tabela_sopa));
 
 	FILE *fp;
@@ -71,7 +71,7 @@ void jogar(char *ficheiro, DICIONARIO dic)
 void jogar_serpente(t_sopa sopa, DICIONARIO dic)
 {
 	int x, y, jogada, i=0, count1, count2, opcao=0, linha=0, sair = 0;
-	char *palavra;
+	char palavra[50];
 	int *coords[2];
 
 	printf("Insira as coordenadas da primeira letra (x y)");
@@ -129,7 +129,7 @@ int jogada_possivel_s(int x_ant, int y_ant, int x, int y, t_sopa sopa)
 			if(((y - y_ant) == -1) || ((y - y_ant) == 1)) return 1;
 		}
 	}
-	else return 0;
+	return 0;
 }
 
 
@@ -139,7 +139,7 @@ int jogada_possivel_s(int x_ant, int y_ant, int x, int y, t_sopa sopa)
 void jogar_cavalo(t_sopa sopa, DICIONARIO dic)
 {
 	int x, y, jogada, i=0, count1, count2, opcao=0, linha=0, sair = 0;
-	char *palavra;
+	char palavra[50];
 	int *coords[2];
 
 	printf("Insira as coordenadas da primeira letra (x y)");
@@ -201,7 +201,6 @@ int jogada_possivel_c(int x_ant, int y_ant, int x , int y, t_sopa sopa)
 	 	if(((x - x_ant) == -1) || ((x - x_ant) == 1)) return 1;
 	 }
 	}
-	else 
 		return 0;
 }
 
