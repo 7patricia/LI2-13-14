@@ -1,5 +1,3 @@
-# gcc *.c -o etapa2
-
 CC = gcc
 CFLAGS = -ansi -Wall -Wextra -pedantic -g
 

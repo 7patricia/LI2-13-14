@@ -9,16 +9,17 @@
 DICIONARIO criar_dicionario (char *ficheiro)
 {
 	char palavra[50];
-	char *palavra2 = (char *)malloc(sizeof(char)*(strlen(palavra)+1));
+	char *palavra2;
 
-	DICIONARIO dic = Hash_Create(32000);
+	DICIONARIO dic = Hash_Create(24);
 	FILE* file = fopen(ficheiro,"r");
-	while(!(feof(file))){
-			fgets(palavra,10000,file);
+	while(fgets(palavra, 50, file)!=NULL) {
 			palavra[strlen(palavra)-1] = '\0';
+			palavra2 = (char *)malloc(sizeof(char)*50);
 			strcpy(palavra2,palavra);
 			Hash_Insert(dic,palavra2);
 		}
+        fclose(file);
 	return dic;
 }
 

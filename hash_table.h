@@ -14,8 +14,8 @@ typedef struct hash_elem {
  * Estrutura de uma tabela de hash
  */
 typedef struct hash_table {
-	int useCount;                       /**< Total de elementos guardados na tabela */
-	int totalCount;                     /**< Numero maximo de elementos suportados */
+	int size;                       /**< Total de elementos guardados na tabela */
+	int array_size;                     /**< Numero maximo de elementos suportados */
 	HashElem *table;                    /**< Apontador para a tabela */
 } HashTableStruct, *HashTable;
 
@@ -54,7 +54,7 @@ int Hash_Expand(HashTable hashT);
  * @param data Dados a inserir
  * @return 0 em caso de sucesso, diferente de 0 em caso de erro
  */
-int Hash_Insert(HashTable hashT, char *data);
+void Hash_Insert(HashTable hashT, char *data);
 
 /** 
  * @fn Hash_Search
@@ -65,17 +65,5 @@ int Hash_Insert(HashTable hashT, char *data);
  * @return Apontador para os dados encontrados, ou NULL se nao existirem
  */
 char *Hash_Search(HashTable hashT, char *key);
-
-/** 
- * @fn Elem_Insert
- * @brief Insere um novo elemento na lista
- *
- * @param hashT Tabela de hash a inserir
- * @param elem Lista de dados
- * @param data Apontador para os dados a inserir
- * @param key Chave indentificar os elementos
- * @return 0 em caso de sucesso
- */
-int Elem_Insert(HashTable hashT, HashElem *elem, char *data);
 
 #endif

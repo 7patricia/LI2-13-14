@@ -148,12 +148,9 @@
 
   void cad_mover ( char m1 [] , char m2 [] , int n ) 
 {
-  char tmp[n];
   int i;
   for(i = 0; i < n; ++i) {
-    tmp[i] = m2[i];
-  }
-  for(i = 0; i < n; ++i) {
-    m1[i] = tmp[i];
+    m1[i] = m2[i];
   }
 }
+
