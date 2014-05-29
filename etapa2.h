@@ -70,7 +70,7 @@ int jogada_possivel_s(int x_ant, int y_ant, int x, int y, t_sopa sopa);
  * @param sopa Estrutura com a sopa de letras em que se está a jogar
  * @return void
  */
-void jogar_cavalo(t_sopa sopa, DICIONARIO dic;
+void jogar_cavalo(t_sopa sopa, DICIONARIO dic);
 
 /**
  * @fn jogada_possivel_c

@@ -71,12 +71,13 @@ int Hash_Expand(HashTable hashT) {
 
 int Hash_Insert(HashTable hashT, char *data) {
     int hash = Hash_hash(data, hashT->totalCount);
-    
+    // if (strcmp(data,"abacaxi")==0)
+    //     printf("here");
     hashT->useCount += Elem_Insert(hashT, &(hashT->table[hash]), data);
     
-    if (Hash_IsFull(hashT)) {
-        Hash_Expand(hashT);
-    }
+    // if (Hash_IsFull(hashT)) {
+    //     Hash_Expand(hashT);
+    // }
     
     return 0;
 }

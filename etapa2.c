@@ -11,7 +11,7 @@ DICIONARIO criar_dicionario (char *ficheiro)
 	char palavra[50];
 	size_t tamanho;
 
-	struct DICIONARIO dic = Hash_Create(64);
+	DICIONARIO dic = Hash_Create(32000);
 	FILE* file = fopen(ficheiro,"r");
 	while(!(feof(file))){
 			fgets(palavra,10000,file);
@@ -26,34 +26,32 @@ DICIONARIO criar_dicionario (char *ficheiro)
 
 int palavra_existe(DICIONARIO dic, char * palavra)
 {
-	
-	if(Hash_Search(dic,palavra)!=NULL)
-		return 1;
-	else 
-		return 0;
+	return Hash_Search(dic,palavra)==NULL;
 }
 
 
 
 void jogar(char *ficheiro, DICIONARIO dic)
 {
-
-	int x, y, i, j;
+	char x[3],y[3];
+	int i, j;
+	char a;
 	char *modo;
 	t_sopa sopa = (t_sopa)malloc(sizeof(struct tabela_sopa));
 
 	FILE *fp;
 	fp = fopen(ficheiro,"r");
-	fscanf(fp,"%d",&x);
-	fscanf(fp, "%d",&y);
-	sopa->nlinhas = y;
-	sopa->ncolunas = x;
+
+	fscanf(fp,"%s",x);
+	fscanf(fp, "%s",y);
+	sopa->nlinhas = atoi(y);
+	sopa->ncolunas = atoi(x);
 
 
-	for(i=0;i<x;i++)
-		for(j=0;j<y;j++)
+	for(i=0;i<sopa->nlinhas;i++)
+		for(j=0;j<sopa->ncolunas;j++){
 			fscanf(fp,"%c",&(sopa->linha[i][j]));
-
+		}
 
 	printf("Quer jogar no modo serpente ou cavalo?\n");
 	scanf("%s", modo);
@@ -106,10 +104,10 @@ void jogar_serpente(t_sopa sopa, DICIONARIO dic)
 		i++;
 	}
 }
-	if(palavra_existe(dic,palavra))
-		printf("Parabéns, encontrou uma palavra!\n");
-	else
-		printf("A palavra que escolheu não se encontra no nosso dicionário. Tente novamente.");
+	// if(palavra_existe(dic,palavra))
+	// 	printf("Parabéns, encontrou uma palavra!\n");
+	// else
+	// 	printf("A palavra que escolheu não se encontra no nosso dicionário. Tente novamente.");
 }
 
 
@@ -152,32 +150,32 @@ void jogar_cavalo(t_sopa sopa, DICIONARIO dic)
 	i++;
 	
 	while(sair == 0){
-	printf("Escolha a próxima jogada. Pressione a tecla 0 para sair.");
-	for(count1=0;count1<sopa->ncolunas;count1++)
-		for(count2=0;count2<sopa->nlinhas;count2++)
-			if(jogada_possivel_c(x,y,count1,count2, sopa))
-			{
-				coords[linha][1] = count1;
-				coords[linha][2] = count2;
-				linha++;
-				opcao++;
-				printf("%d. %c (%d,%d)\n", opcao, sopa->linha[count1][count2], count1, count2);
-			}
-	scanf("%d", &jogada);
-	if(jogada == 0)
-		sair = 1;
-	else
-	{
-		x = coords[jogada-1][1];
-		y = coords[jogada-1][2];
-		palavra[i] = sopa->linha[x][y];
-		i++;
+		printf("Escolha a próxima jogada. Pressione a tecla 0 para sair.");
+		for(count1=0;count1<sopa->ncolunas;count1++)
+			for(count2=0;count2<sopa->nlinhas;count2++)
+				if(jogada_possivel_c(x,y,count1,count2, sopa))
+				{
+					coords[linha][1] = count1;
+					coords[linha][2] = count2;
+					linha++;
+					opcao++;
+					printf("%d. %c (%d,%d)\n", opcao, sopa->linha[count1][count2], count1, count2);
+				}
+		scanf("%d", &jogada);
+		if(jogada == 0)
+			sair = 1;
+		else
+		{
+			x = coords[jogada-1][1];
+			y = coords[jogada-1][2];
+			palavra[i] = sopa->linha[x][y];
+			i++;
+		}
 	}
-}
-	if(palavra_existe(dic,palavra))
-		printf("Parabéns, encontrou uma palavra!\n");
-	else
-		printf("A palavra que escolheu não se encontra no nosso dicionário. Tente novamente.");
+	// if(palavra_existe(dic,palavra))
+	// 	printf("Parabéns, encontrou uma palavra!\n");
+	// else
+	// 	printf("A palavra que escolheu não se encontra no nosso dicionário. Tente novamente.");
 }
 
 
