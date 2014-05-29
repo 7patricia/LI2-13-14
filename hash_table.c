@@ -5,12 +5,13 @@
 #include "hash_table.h"
 
 int Hash_hash(char*palavra,int size){
-    int x,sum;
+    int x;
+    long int sum;
     for(x=0; palavra[x] != '\0'; x++) {
         sum = sum*2 + palavra[x];
     }
 
-    return sum % size;
+    return (int) sum % size;
 }
 
 int Hash_compare_keys(char *key1,char *key2) {
