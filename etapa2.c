@@ -9,14 +9,13 @@
 DICIONARIO criar_dicionario (char *ficheiro)
 {
 	char palavra[50];
-	size_t tamanho;
+	char *palavra2 = (char *)malloc(sizeof(char)*(strlen(palavra)+1));
 
 	DICIONARIO dic = Hash_Create(32000);
 	FILE* file = fopen(ficheiro,"r");
 	while(!(feof(file))){
 			fgets(palavra,10000,file);
 			palavra[strlen(palavra)-1] = '\0';
-			char *palavra2 = (char *)malloc(sizeof(char)*(strlen(palavra)+1));
 			strcpy(palavra2,palavra);
 			Hash_Insert(dic,palavra2);
 		}
@@ -35,7 +34,6 @@ void jogar(char *ficheiro, DICIONARIO dic)
 {
 	char x[3],y[3];
 	int i, j;
-	char a;
 	char *modo;
 	t_sopa sopa = (t_sopa)malloc(sizeof(struct tabela_sopa));
 
@@ -104,10 +102,10 @@ void jogar_serpente(t_sopa sopa, DICIONARIO dic)
 		i++;
 	}
 }
-	// if(palavra_existe(dic,palavra))
-	// 	printf("Parabéns, encontrou uma palavra!\n");
-	// else
-	// 	printf("A palavra que escolheu não se encontra no nosso dicionário. Tente novamente.");
+	if(palavra_existe(dic,palavra))
+		printf("Parabéns, encontrou uma palavra!\n");
+	else
+		printf("A palavra que escolheu não se encontra no nosso dicionário. Tente novamente.");
 }
 
 
@@ -172,10 +170,10 @@ void jogar_cavalo(t_sopa sopa, DICIONARIO dic)
 			i++;
 		}
 	}
-	// if(palavra_existe(dic,palavra))
-	// 	printf("Parabéns, encontrou uma palavra!\n");
-	// else
-	// 	printf("A palavra que escolheu não se encontra no nosso dicionário. Tente novamente.");
+	if(palavra_existe(dic,palavra))
+		printf("Parabéns, encontrou uma palavra!\n");
+	else
+		printf("A palavra que escolheu não se encontra no nosso dicionário. Tente novamente.");
 }
 
 

@@ -1,5 +1,5 @@
 #include <stdlib.h>
-
+#include <string.h>
 #include <stdio.h>
 
 #include "hash_table.h"
@@ -21,12 +21,13 @@ int Hash_compare_keys(char *key1,char *key2) {
 
 HashTable Hash_Create(int maxCount) {
     HashTable hs = (HashTable) malloc(sizeof (struct hash_table));
+    int x;
 
     hs->useCount = 0;
     hs->totalCount = maxCount;
     hs->table = (HashElem *) malloc(sizeof (HashElem) * maxCount);
 
-    int x;
+
     for (x = 0; x < maxCount; x++) {
         hs->table[x] = NULL;
     }
@@ -71,13 +72,8 @@ int Hash_Expand(HashTable hashT) {
 
 int Hash_Insert(HashTable hashT, char *data) {
     int hash = Hash_hash(data, hashT->totalCount);
-    // if (strcmp(data,"abacaxi")==0)
-    //     printf("here");
+
     hashT->useCount += Elem_Insert(hashT, &(hashT->table[hash]), data);
-    
-    // if (Hash_IsFull(hashT)) {
-    //     Hash_Expand(hashT);
-    // }
     
     return 0;
 }
@@ -95,11 +91,12 @@ char *Hash_Search(HashTable hashT, char *key) {
 }
 
 int Elem_Insert(HashTable hashT, HashElem *elem, char *data) {
+    int returnVal = 0;
+
     while ((*elem != NULL) && !Hash_compare_keys((*elem)->data, data)) {
         elem = &((*elem)->next);
     }
 
-    int returnVal = 0;
     if (*elem == NULL) {
         *elem = (HashElem) malloc(sizeof (struct hash_elem));
         (*elem)->next = NULL;

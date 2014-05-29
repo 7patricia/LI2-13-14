@@ -6,21 +6,21 @@
 
 int main()
 {
-	// char palavra[50];
+	/*char palavra[50];*/
 	char ficheiro[20];
-	//Testar tarefa 3
 
 	DICIONARIO dic = criar_dicionario("dicio.txt");
 
-	// printf("palavra a consultar:\n");
-	// fgets(palavra, 50, stdin);
-	// palavra[strlen(palavra)-1] = '\0';
-	// if(palavra_existe(dic,palavra))
-	// 	printf("A palavra %s está no dicionário.\n", palavra);
-	// else
-	// 	printf("A palavra %s não está no dicionário.\n", palavra);
+	/* printf("palavra a consultar:\n");
+	fgets(palavra, 50, stdin);
+	palavra[strlen(palavra)-1] = '\0';
+	if(palavra_existe(dic,palavra))
+		printf("A palavra %s está no dicionário.\n", palavra);
+	else
+		printf("A palavra %s não está no dicionário.\n", palavra);
+	*/
 
-	//Testar tarefa 4
+	/*Testar tarefa 4 */
 	printf("Introduza o nome do ficheiro onde se encontra a sopa de letras.\n");
 	scanf("%s",ficheiro);
 
